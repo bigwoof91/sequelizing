@@ -1,0 +1,56 @@
+<div class="container header-container">
+  <img class="logo" src="assets/img/burger-monger.png">
+</div>
+
+<!-- Add a burger -->
+<div class="container">
+    <div class="row add-container">
+      <div class="col-sm-12">
+
+          <h1>Eat-Da-Burger!</h1>   
+          <form id="add" action="/burgers/add" method="POST">
+            <textarea name="burger_name" class="burger-name-input" placeholder="Enter a burger you want to eat then click 'Add Your Burger!'"></textarea><br>
+            <input type="submit" class="btn btn-warning" value="Add Your Burger!" />
+          </form>
+
+      </div>
+    </div>
+
+<!-- List of your burgers -->
+{{#if burgers}}
+  <div class="row">
+      <div class="col-sm-6">
+
+        <h2>Your Burgers</h2>
+        <hr>
+	    	{{#each burgers}}
+        {{#unless this.devoured}}
+          <form id="update" action="/burgers/devour/{{this.id}}?_method=PUT" method="POST">
+            <input type="hidden" name="devoured" value="true">
+            <button class="btn btn-success" type="submit">DEVOUR THIS BURGER</button>            
+          </form>
+          {{> burgers/delete-burger}}        
+          <div class="well burger-item">
+            <span>{{this.burger_name}}</span>
+          </div><br>
+        {{/unless}}
+        {{/each}}
+
+      </div>
+
+<!-- Burgers you've devoured -->
+      <div class="col-sm-6">
+        <h2>Burgers You've Devoured</h2>
+        <hr>
+        {{#each burgers}}
+          {{#if this.devoured}}
+          {{> burgers/delete-devoured-burger}}
+            <div class="well devoured burger-devoured-item">
+              <span>{{this.burger_name}}</span>
+            </div>
+            {{/if}}
+            {{/each}}
+      </div>
+    </div>
+    {{/if}}
+</div>
