@@ -1,28 +1,17 @@
-/* Model for how to interface with the database. */
-
-var orm = require('../config/orm.js');
-
-var burger = {
-    selectAll: function(cb) {
-        orm.selectAll('burgers', function(res) {
-            cb(res);
-        });
-    },
-    insertOne: function(col, val, cb) {
-        orm.insertOne('burgers', col, val, function(res) {
-            cb(res);
-        });
-    },
-    updateOne: function(objColVal, condition, cb) {
-        orm.updateOne('burgers', objColVal, condition, function(res) {
-            cb(res);
-        });
-    },
-    delete: function(objColVal, condition, cb) {
-        orm.delete("burgers", objColVal, condition, function(res) {
-            cb(res);
-        });
-    }
+module.exports = function(sequelize, DataTypes) {
+    var burger = sequelize.define("burgers", {
+        burgerName: {
+            type: DataTypes.STRING,
+            allowNull: false
+        },
+        devoured: {
+            type: DataTypes.BOOLEAN,
+            allowNull: false,
+            defaultValue: false
+        },
+        date: {
+            type: DataTypes.DATE
+        }
+    });
+    return burger;
 };
-
-module.exports = burger;

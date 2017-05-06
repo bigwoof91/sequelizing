@@ -8,8 +8,8 @@
       <div class="col-sm-12">
 
           <h1>Eat-Da-Burger!</h1>   
-          <form id="add" action="/burgers/add" method="POST">
-            <textarea name="burger_name" class="burger-name-input" placeholder="Enter a burger you want to eat then click 'Add Your Burger!'"></textarea><br>
+          <form id="add" action="/" method="POST">
+            <textarea name="burgerName" class="burger-name-input" placeholder="Enter a burger you want to eat then click 'Add Your Burger!'"></textarea><br>
             <input type="submit" class="btn btn-warning" value="Add Your Burger!" />
           </form>
 
@@ -17,21 +17,21 @@
     </div>
 
 <!-- List of your burgers -->
-{{#if burgers}}
+{{#if burger}}
   <div class="row">
       <div class="col-sm-6">
 
         <h2>Your Burgers</h2>
         <hr>
-	    	{{#each burgers}}
+	    	{{#each burger}}
         {{#unless this.devoured}}
-          <form id="update" action="/burgers/devour/{{this.id}}?_method=PUT" method="POST">
+          <form id="update" action="/{{this.id}}?_method=PUT" method="POST">
             <input type="hidden" name="devoured" value="true">
             <button class="btn btn-success" type="submit">DEVOUR THIS BURGER</button>            
           </form>
           {{> burgers/delete-burger}}        
           <div class="well burger-item">
-            <span>{{this.burger_name}}</span>
+            <span>{{this.burgerName}}</span>
           </div><br>
         {{/unless}}
         {{/each}}
@@ -42,11 +42,11 @@
       <div class="col-sm-6">
         <h2>Burgers You've Devoured</h2>
         <hr>
-        {{#each burgers}}
+        {{#each burger}}
           {{#if this.devoured}}
           {{> burgers/delete-devoured-burger}}
             <div class="well devoured burger-devoured-item">
-              <span>{{this.burger_name}}</span>
+              <span>{{this.burgerName}}</span>
             </div>
             {{/if}}
             {{/each}}
